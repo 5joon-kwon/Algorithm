@@ -1,3 +1,4 @@
+# 내가 생각한 풀이
 hour, min, sec = map(int, input().split())
 cook = int(input())
 
@@ -26,3 +27,19 @@ while True:
         break
 
 print(hour, min ,sec)
+
+# 쉬운 풀이
+hour, min, sec = map(int, input().split())
+cook = int(input())
+
+sec += cook
+min = sec // 60
+sec %= 60        # 60초 다음은 0초
+
+hour = min // 60
+min %= 60        # 60분 다음은 0분
+
+hour %= 24       # 24시 다음은 0시
+
+print(hour, min, sec)
+
