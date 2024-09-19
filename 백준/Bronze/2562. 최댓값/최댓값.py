@@ -13,3 +13,11 @@ for idx, num in enumerate(li):
         
 print(ma)
 print(index + 1)
+
+
+# li = []
+# for _ in range(9):
+#    li.append(int(input())
+# 
+# print(max(li))
+# print(li.index(max(li) + 1))
