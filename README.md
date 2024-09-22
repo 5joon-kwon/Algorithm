@@ -1,2 +1,2 @@
 # Algorithm
-Studying Baekjoon & Programmers
+Studying Algorithm
