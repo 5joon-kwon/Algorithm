@@ -1,2 +1,2 @@
 # Algorithm
-Studying Algorithm
+Studying Algorithm
