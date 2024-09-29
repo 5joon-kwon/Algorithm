@@ -8,4 +8,4 @@ print(int(res))
 
 # 효율적인 코드
 
-# print(int(''.join(sorted(list(input()), reverse = True))))
+# print(int(''.join(sorted(input(), reverse = True))))
