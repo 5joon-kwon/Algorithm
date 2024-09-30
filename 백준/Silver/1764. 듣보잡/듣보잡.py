@@ -1,11 +1,16 @@
+# import sys
+
+# N, M = map(int, sys.stdin.readlin().strip().split())
 N, M = map(int, input().split())
 
 never = {}
 
 for _ in range(N):
+  # never[sys.stdin.readline().strip()] = 0
     never[input()] = 0
     
 for _ in range(M):
+  # name = sys.stdin.readline().strip()
     name = input()
     if name in never:
         never[name] += 1
