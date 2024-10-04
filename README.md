@@ -1,2 +1,2 @@
 # Algorithm
-We Go High
+We Go High
