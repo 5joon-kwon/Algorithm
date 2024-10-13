@@ -12,8 +12,8 @@ for _ in range(t):
         
     # 받은 목록을 사전순으로 오름차순 정렬
     num_li.sort()
-    flag = False
     
+    flag = False
     # 이웃한 두 번호를 비교
     for i in range(len(num_li) - 1):
         if num_li[i] == num_li[i+1][:len(num_li[i])]:
