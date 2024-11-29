@@ -10,7 +10,6 @@ def bfs(graph, start, visited):
             if not visited[i]:
                 queue.append(i)
                 visited[i] = True
-
 graph = [
     [],
     [2, 3, 8],
