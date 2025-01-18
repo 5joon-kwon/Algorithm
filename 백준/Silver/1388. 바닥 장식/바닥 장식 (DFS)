@@ -1,17 +1,25 @@
 N, M = map(int, input().split())
 
+# DFS 활용
 def dfs(x, y):
+    # '-' 타일 탐색
     if wood[x][y] == '-':
+        # 해당 타일 방문 처리
         wood[x][y] = 1
+        # 해당 타일 좌우 탐색
         for dy in [1, -1]:
             beside_y = y + dy
+            # 만약 좌우 타일이 바닥의 가로 범위(M) 안에 위치하고 '-' 모양이라면 해당 위치 탐색
             if 0 <= beside_y < M and wood[x][beside_y] == '-':
                 dfs(x, beside_y)
-    
+
+    # '|' 타일 탐색
     if wood[x][y] == '|':
         wood[x][y] = 1
+        # 해당 타일 상하 탐색
         for dx in [1, -1]:
             beside_x = x + dx
+            # 만약 상하 타일이 바닥의 세로 범위(N) 안에 위치하고 '|' 모양이라면 해당 위치 탐색
             if 0 <= beside_x < N and wood[beside_x][y] == '|':
                 dfs(beside_x, y)
 
@@ -20,6 +28,7 @@ count = 0
 
 for i in range(N):
     for j in range(M):
+        # 방문하지 않은 위치 탐색
         if wood[i][j] in ('-', '|'):
             dfs(i, j)
             count += 1
