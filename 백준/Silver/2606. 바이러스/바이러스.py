@@ -1,15 +1,23 @@
-n=int(input())
-v=int(input())
-graph = [[] for i in range(n+1)]
-visited=[0]*(n+1)
-for i in range(v):
-    a,b=map(int,input().split())
-    graph[a]+=[b]
-    graph[b]+=[a]
-def dfs(v):
-    visited[v]=1
-    for nx in graph[v]:
-        if visited[nx]==0:
-            dfs(nx)
+N = int(input())
+M = int(input())
+count = 0
+
+def dfs(start):
+    global count
+    visit[start] = 1
+    
+    for i in range(N + 1):
+        if graph[start][i] == 1 and visit[i] != 1:
+            dfs(i)
+            count += 1
+
+graph = [[0] * (N + 1) for _ in range(N + 1)]
+visit = [0] * (N + 1)
+
+for _ in range(M):
+    a, b = map(int, input().split())
+    graph[a][b] = 1
+    graph[b][a] = 1
+
 dfs(1)
-print(sum(visited)-1)
+print(count)
