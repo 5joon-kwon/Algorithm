@@ -1,9 +1,10 @@
 N, M = map(int, input().split())
 grid = [list(map(int, input().split())) for _ in range(N)]
 
+# 그리드 안에서는 인접 행렬 or 인접 리스트 사용하지 않아도 된다 !
+visited = [[False] * M for _ in range(N)]
+answer = [[0] * M for _ in range(N)]
 order = 1
-visited = [[False] * (N + 1) for _ in range(N + 1)]
-answer = [[0] * (N + 1) for _ in range(N + 1)]
 
 def in_range(x, y):
     return 0 <= x < 5 and 0 <= y < 5
