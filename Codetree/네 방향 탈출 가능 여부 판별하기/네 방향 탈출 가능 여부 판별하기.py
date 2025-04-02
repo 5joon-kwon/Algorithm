@@ -13,11 +13,7 @@ def can_go(x, y):
         return False
     if visited[x][y] or grid[x][y] == 0:
         return False
-    return True
-
-def push(x, y):
-    visited[x][y] = True
-    queue.append((x, y))
+    return True    
 
 def bfs():
     dxs = [1, 0, -1, 0]
@@ -32,11 +28,13 @@ def bfs():
             new_x, new_y = x + dx, y + dy
 
             if can_go(new_x, new_y):
-                push(new_x, new_y)
+                visited[x][y] = True
+                queue.append((x, y))
     
     return False
 
-push(0, 0)
+visited[0][0] = True
+queue.append((0, 0))
 
 if bfs():
     print(1)
