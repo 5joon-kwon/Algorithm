@@ -69,8 +69,8 @@ cnt_list = [] # K턴마다 저장할 유물의 개수
 for _ in range(K): # 유물이 같을 때의 조건을 중첩 for문으로 자연으럽게 구현 !
     max_cnt = 0
     for rot in range(1, 4): # 회전수
-        for i in range(3): # 열 우선 (중심좌표 1,2,3)
-            for j in range(3): # 행 우선(중심좌표 1,2,3)
+        for j in range(3): # 열 우선 (중심좌표 1,2,3)
+            for i in range(3): # 행 우선(중심좌표 1,2,3)
                 ngrid = [x[:] for x in grid] # 원본 격자 깊은 복사
                 for _ in range(rot): # 회전 1~3번
                     ngrid = rotate(ngrid, i, j) # 회전시킬 격자, 시작점
