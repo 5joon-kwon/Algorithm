@@ -6,18 +6,12 @@ public class Main {
 	static boolean[] visited;
 	static int cnt;
 	
-	public static void bfs() {
-		Queue<Integer> queue = new ArrayDeque<>();
-		queue.add(1);
-		
-		while (!queue.isEmpty()) {
-			int currV = queue.poll();
-			for (int nextV : graph[currV]) {
-				if (!visited[nextV]) {
-					visited[nextV] = true;
-					queue.add(nextV);
-					cnt++;
-				}
+	public static void dfs(int currV) {
+		for (int nextV : graph[currV]) {
+			if (!visited[nextV]) {
+				visited[nextV] = true;
+				cnt++;
+				dfs(nextV);
 			}
 		}
 	}
@@ -38,14 +32,11 @@ public class Main {
             int b = Integer.parseInt(st.nextToken());
             graph[a].add(b);
             graph[b].add(a);
-            
-//          이렇게 하면 단방향 처리만 하는 셈
-//			graph[Integer.parseInt(st.nextToken())].add(Integer.parseInt(st.nextToken()));
 		}
 		
 		visited = new boolean[N + 1];
 		visited[1] = true;
-		bfs();
+		dfs(1);
 		
 		System.out.println(cnt);		
 	} //main
