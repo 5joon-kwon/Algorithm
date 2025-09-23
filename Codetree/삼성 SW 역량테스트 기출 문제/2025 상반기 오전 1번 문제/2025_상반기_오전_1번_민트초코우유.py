@@ -37,7 +37,7 @@ def group():
 
     return boss_list
 
-dir = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+dir = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 def move(boss_list):
     moved = set()
     for _, cp, ci, cj in boss_list:
