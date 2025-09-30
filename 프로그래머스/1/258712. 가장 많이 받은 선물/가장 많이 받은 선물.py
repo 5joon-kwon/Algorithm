@@ -26,16 +26,6 @@ def solution(friends, gifts):
     for p in give.keys():
         score[p] = give[p] - get[p]
     
-    # for a in arr:
-    #     print(a)
-    # for v in visited:
-    #     print(v)
-    # print(give.keys())
-    # print(give.values())
-    # print(get.values())
-    # print(score.keys())
-    # print(score.values())
-    
     # 선물 주고받는 사람 조합
     for give_p in give.keys():
         for get_p in give.keys():
@@ -72,15 +62,7 @@ def solution(friends, gifts):
                     visited[people[give_p]][people[get_p]] = 1
                     visited[people[get_p]][people[give_p]] = 1
                     continue
-        
-#         for a in arr:
-#             print(a)
-        
-#         print()
-#         for v in visited:
-#             print(v)
-#         break
-    # 다음 달에 선물을 가장 많이 받을 친구의 받을 선물의 수를 출력
+
     res = []
     for v in nm.values():
         res.append(v)
