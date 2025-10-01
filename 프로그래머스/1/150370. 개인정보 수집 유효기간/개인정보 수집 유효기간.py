@@ -1,63 +1,59 @@
 def solution(today, terms, privacies):
-    terms_list = []
-    privacies_list = []
+    ty, tm, td = map(int, today.split('.'))
+    kinds = {}
+    for term in terms:
+        k, t = term.split()
+        kinds[k] = int(t)
+    
+    li = []
+    for idx, p in enumerate(privacies):
+        date, k = p.split()
+        y, m, d = map(int, date.split('.'))
+        li.append([idx + 1, y, m, d, k])
+    
     answer = []
-    
-    for i in terms:
-        terms_list.append(i.split(' '))
-    
-    for i in privacies:
-        privacies_list.append(i.split( ))
-    
-    if(today[5] == '0'):
-        t_month = int(today[6])
-    else:
-        t_month = int(today[5:7])
-    
-    t_year = int(today[:4])
-
-    if(today[8] == '0'):
-        t_day = int(today[9])
-    else:
-        t_day = int(today[8:10])
-                
-    for idx, i in enumerate(privacies_list):
-        for j in terms_list:
-            year = int(i[0][:4])
-            
-            if(len(i[0][5]) == '0'):
-                month = int(i[0][6])
+    # 한달 : 28일
+    # 수집날도 하루로 인정 21/01/05 - 22/01/04
+    for i in li:
+        num, y, m, d, k = i
+        
+        # nyear, nmonth
+        sum_month = m + kinds[k]
+        if sum_month > 12:
+            if sum_month % 12 == 0:
+                ny = y + (sum_month // 12) - 1
+                nm = 12
             else:
-                month = int(i[0][5:7])
-            
-            if(len(i[0][8]) == '0'):
-                month = int(i[0][9])
+                ny = y + (sum_month // 12)
+                nm = sum_month % 12
+        else:
+            ny = y
+            nm = sum_month
+        
+        # nday
+        if d == 1:
+            if nm == 1:
+                ny -= 1
+                nm = 12
+                nd = 28
             else:
-                day = int(i[0][8:10])
-            
-            if i[1] == j[0]:
-                day -= 1
-                if(day == 0):
-                    day = 28
-                    month -= 1
-                if(month == 0):
-                    month = 12
-                    year -= 1 
-                
-                m = int(j[1]) % 12
-                mm = int(j[1]) // 12
-                    
-                month += m
-                year += mm
-                if(month > 12):
-                    year += 1
-                    month -= 12
-                
-                if(year < t_year and (idx+1 not in answer)):
-                    answer.append(idx+1)
-                elif(year == t_year and month < t_month and (idx+1 not in answer)):
-                    answer.append(idx+1)
-                elif(year == t_year and month == t_month and day < t_day and (idx+1 not in answer)):
-                    answer.append(idx+1)
-               
+                nm -= 1
+                nd = 28
+        else:
+            nd = d - 1
+        
+        # nyear < tyear : append
+        if ny < ty:
+            answer.append(num)
+            continue
+        # nmonth < tmonth : append
+        elif ny == ty and nm < tm:
+            answer.append(num)
+            continue
+        # nday < tday : append
+        elif ny == ty and nm == tm and nd < td:
+            answer.append(num)
+            continue
+    
+    answer.sort()
     return answer
