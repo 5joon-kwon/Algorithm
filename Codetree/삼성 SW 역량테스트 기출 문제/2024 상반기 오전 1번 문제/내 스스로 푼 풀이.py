@@ -49,12 +49,13 @@ def bfs(si, sj, visited, graph, plist):
 # k 턴
 for _ in range(k):
     cnt = 0
-    cnt_max, mi, mj, mr, mpieces, mgrid = 0, 0, 0, 0, [], []
-    for ri in range(1, 4):
-        for rj in range(1, 4):
-            # 90, 180, 270 회전
-            for r in range(3):
+    cnt_max, mpieces, mgrid = 0, [], []
+    # 90, 180, 270 회전
+    for r in range(3):
+        for ri in range(1, 4):
+            for rj in range(1, 4):
                 new_grid = rotate(ri, rj, r)
+                
                 # 유물 탐색
                 pieces = []
                 v = [[0] * 5 for _ in range(5)]   
@@ -62,12 +63,11 @@ for _ in range(k):
                     for j in range(5):
                         if v[i][j] == 0:
                             bfs(i, j, v, new_grid, pieces)
+                            
                 # 유물 1차 획득을 최대화 (각도가 작은, 열 작은, 행 작은 순서)
                 if cnt_max < len(pieces):
-                    cnt_max, mi, mj, mr, mpieces = len(pieces), i, j, r, pieces
-                elif cnt_max == len(pieces):
-                    if mr > r:
-                        cnt_max, mi, mj, mr, mpieces, mgrid = len(pieces), i, j, r, pieces, new_grid
+                    cnt_max, mpieces, mgrid = len(pieces), pieces, new_grid
+                
 
     # 유물 없으면
     if cnt_max == 0:
