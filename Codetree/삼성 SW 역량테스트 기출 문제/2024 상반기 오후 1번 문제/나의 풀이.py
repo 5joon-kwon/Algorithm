@@ -1,6 +1,3 @@
-import sys
-sys.stdin = open('test.txt', 'r')
-
 from collections import deque
 
 def bfs(i, j, exits, grid):
@@ -47,7 +44,6 @@ dy = [0, 1, 0, -1]
 cnt = 0
 exits = set()
 for idx, (j, d) in enumerate(golems):
-    test = [row[:] for row in grid]
     i = 1
     j -= 1
     di, dj = dx[d], dy[d]
@@ -57,14 +53,14 @@ for idx, (j, d) in enumerate(golems):
         bfs_flag = True
         # 남쪽으로 한칸 내려가기, 중심(i, j)기준 
             # i + 1이 r + 3보다 작고, (i + 1, j - 1), (i + 2, j), (i + 1, j + 1) 이 모두 비었다면
-        if i < r + 1 and test[i + 1][j - 1] == 0 and test[i + 2][j] == 0 and test[i + 1][j + 1] == 0:
+        if i < r + 1 and grid[i + 1][j - 1] == 0 and grid[i + 2][j] == 0 and grid[i + 1][j + 1] == 0:
             i += 1
             move_flag = True
         # 안되면 서쪽으로 회전, 중심 : (i, j), 출구: (d - 1) % 4
             # i + 1이 r + 3보다 작고, 
             # (i - 1, j - 1), (i, j - 2), (i + 1, j - 1)
             # (i + 1, j - 2), (i + 2, j - 1) 이 모두 비었다면
-        elif i < r + 1 and 1 < j and test[i - 1][j - 1] == 0 and test[i][j - 2] == 0  and test[i + 1][j - 1] == 0 and test[i + 1][j - 2] == 0 and test[i + 2][j - 1] == 0:
+        elif i < r + 1 and 1 < j and grid[i - 1][j - 1] == 0 and grid[i][j - 2] == 0  and grid[i + 1][j - 1] == 0 and grid[i + 1][j - 2] == 0 and grid[i + 2][j - 1] == 0:
             i += 1
             j -= 1
             d = (d - 1) % 4
@@ -72,7 +68,7 @@ for idx, (j, d) in enumerate(golems):
         # 안되면 동쪽으로 회전, 중심 : (i, j), 출구: (d + 1) % 4
             # (i - 1, j + 1), (i, j + 2), (i + 1, j + 1)
             # (i + 1, j + 2), (i + 2, j + 1) 이 모두 비었다면
-        elif i < r + 1 and j < c - 2 and test[i - 1][j + 1] == 0 and test[i][j + 2] == 0  and test[i + 1][j + 1] == 0 and test[i + 1][j + 2] == 0 and test[i + 2][j + 1] == 0:
+        elif i < r + 1 and j < c - 2 and grid[i - 1][j + 1] == 0 and grid[i][j + 2] == 0  and grid[i + 1][j + 1] == 0 and grid[i + 1][j + 2] == 0 and grid[i + 2][j + 1] == 0:
             i += 1
             j += 1
             d = (d + 1) % 4
@@ -96,4 +92,3 @@ for idx, (j, d) in enumerate(golems):
         cnt += bfs(i, j, exits, grid)
 
 print(cnt)
-    
