@@ -1,76 +1,76 @@
 import sys
 from collections import deque
 
+# sys.stdin = open('test.txt', 'r')
 input = sys.stdin.readline
 
-def move(x, y, dx, dy):
-    cnt = 0
-    # 다음 칸이 벽이 아니고, 현재 칸이 구멍이 아닐 때 계속 이동
-    while board[x + dx][y + dy] != '#' and board[x][y] != 'O':
-        x += dx
-        y += dy
-        cnt += 1
-        if board[x][y] == 'O':
-            break
-    return x, y, cnt
+def find_balls():
+    ri, rj, bi, bj = 0, 0, 0, 0
+    for i in range(n):
+        for j in range(m):
+            if board[i][j] == 'R':
+                ri, rj = i, j
+            elif board[i][j] == 'B':
+                bi, bj = i, j
+    
+    return ri, rj, bi, bj
 
-def bfs():
-    q = deque()
-    q.append((rx, ry, bx, by, 0))
-    visited[rx][ry][bx][by] = True
+def move(i, j, di, dj):
+    dist = 0
+    while True:
+        if board[i][j] == 'O':
+            break
+
+        if board[i + di][j + dj] == '#':
+            break
+        
+        i += di
+        j += dj
+        dist += 1
+
+    return i, j, dist
+
+def bfs(ri, rj, bi, bj):
+    q = deque([(ri, rj, bi, bj, 0)])
+    v = [[[[0] * m for _ in range(n)] for _ in range(m)] for _ in range(n)]
+    v[ri][rj][bi][bj] = 1
 
     while q:
-        crx, cry, cbx, cby, depth = q.popleft()
+        sri, srj, sbi, sbj, cnt = q.popleft()
 
-        # 10번까지만 허용
-        if depth >= 10:
+        if cnt >= 10:
             continue
 
-        for dx, dy in directions:
-            nrx, nry, rcnt = move(crx, cry, dx, dy)
-            nbx, nby, bcnt = move(cbx, cby, dx, dy)
+        for di, dj in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+            nri, nrj, rdist = move(sri, srj, di, dj)
+            nbi, nbj, bdist = move(sbi, sbj, di, dj)
 
-            # 파란 구슬이 구멍에 빠지면 실패
-            if board[nbx][nby] == 'O':
+            # 파랑 구슬은 구멍에 들어가면 안됨
+            if board[nbi][nbj] == 'O':
                 continue
-
-            # 빨간 구슬만 구멍에 빠지면 성공
-            if board[nrx][nry] == 'O':
-                return depth + 1
-
-            # 두 구슬이 같은 위치에 멈췄다면 조정
-            if nrx == nbx and nry == nby:
-                if rcnt > bcnt:
-                    nrx -= dx
-                    nry -= dy
+            
+            # 빨강 구슬이 구멍에 들어감
+            if board[nri][nrj] == 'O':
+                return cnt + 1
+            
+            # 빨, 파는 동시에 같은 칸 x
+            if nri == nbi and nrj == nbj:
+                # 빨강이 더 많이 이동한 경우
+                if rdist > bdist:
+                    nri -= di
+                    nrj -= dj
                 else:
-                    nbx -= dx
-                    nby -= dy
-
-            if not visited[nrx][nry][nbx][nby]:
-                visited[nrx][nry][nbx][nby] = True
-                q.append((nrx, nry, nbx, nby, depth + 1))
-
+                    nbi -= di
+                    nbj -= dj
+            
+            if v[nri][nrj][nbi][nbj] == 0:
+                q.append((nri, nrj, nbi, nbj, cnt + 1))
+                v[nri][nrj][nbi][nbj] = 1
+    
     return -1
 
-
 n, m = map(int, input().split())
-board = []
-rx = ry = bx = by = 0
 
-for i in range(n):
-    row = list(input().strip())
-    for j in range(m):
-        if row[j] == 'R':
-            rx, ry = i, j
-            row[j] = '.'
-        elif row[j] == 'B':
-            bx, by = i, j
-            row[j] = '.'
-    board.append(row)
-
-visited = [[[[False] * m for _ in range(n)] for _ in range(m)] for _ in range(n)]
-
-directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-
-print(bfs())
+board = [list(input()) for _ in range(n)]
+ri, rj, bi, bj= find_balls()
+print(bfs(ri, rj, bi, bj))
