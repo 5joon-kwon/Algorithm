@@ -1,25 +1,26 @@
 import sys
+# sys.stdin = open('test.txt', 'r')
 input = sys.stdin.readline
 
 n = int(input())
-weights = {}
 
-for _ in range(n):
-    word = input().strip()
+words = [input().strip() for _ in range(n)]
+dic = {}
+
+for word in words:
     length = len(word)
-
     for i in range(length):
-        ch = word[i]
-        value = 10 ** (length - i - 1)
-        weights[ch] = weights.get(ch, 0) + value
+        digit = 10 ** (length - i - 1)
+        if word[i] in dic:
+            dic[word[i]] += digit
+        else:
+            dic[word[i]] = digit
 
-values = sorted(weights.values(), reverse=True)
+sdic = sorted(dic.values(), reverse=True)
 
-digit = 9
-answer = 0
-
-for v in values:
-    answer += v * digit
-    digit -= 1
-
-print(answer)
+num = 9
+res = 0
+for s in sdic:
+    res += num * s
+    num -= 1
+print(res)
