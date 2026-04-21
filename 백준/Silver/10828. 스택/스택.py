@@ -1,29 +1,30 @@
 import sys
-from collections import deque
+# sys.stdin = open('test.txt', 'r')
+input = sys.stdin.readline
 
-N = int(input())
-stack = deque()
+n = int(input())
+li = []
+for _ in range(n):
+    order = input().strip()
 
-for _ in range(N):
-    order = sys.stdin.readline().strip()
-    if order[:4] == 'push':
-        order, x = order.split()
-        stack.append(x)
-    elif order == 'pop':
-        if len(stack) == 0:
+    if order == 'pop':
+        if len(li) == 0:
             print(-1)
         else:
-            a = stack.pop()
-            print(a)
+            print(li[-1])
+            li.pop()
     elif order == 'size':
-        print(len(stack))
+        print(len(li))
     elif order == 'empty':
-        if len(stack) == 0:
+        if len(li) == 0:
             print(1)
         else:
             print(0)
-    else:
-        if len(stack) == 0:
+    elif order == 'top':
+        if len(li) == 0:
             print(-1)
         else:
-            print(stack[-1])
+            print(li[-1])
+    else:
+        o, num = order.split()
+        li.append(num)
