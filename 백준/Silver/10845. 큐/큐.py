@@ -1,53 +1,37 @@
 import sys
+# sys.stdin = open('test.txt', 'r')
+input = sys.stdin.readline
 
-N = int(input())
+from collections import deque
 
-queue = []
+n = int(input())
+li = deque()
+for _ in range(n):
+    order = input().rstrip()
 
-def push(num):
-    queue.append(num)
-
-def pop():
-    if len(queue) == 0:
-        print(-1)
+    if order == 'pop':
+        if len(li) == 0:
+            print(-1)
+        else:
+            print(li[0])
+            li.popleft()
+    elif order == 'size':
+        print(len(li))
+    elif order == 'empty':
+        if len(li) == 0:
+            print(1)
+        else:
+            print(0)
+    elif order == 'front':
+        if len(li) == 0:
+            print(-1)
+        else:
+            print(li[0])
+    elif order == 'back':
+        if len(li) == 0:
+            print(-1)
+        else:
+            print(li[-1])
     else:
-        print(queue[0])
-        queue.pop(0)
-
-def size():
-    print(len(queue))
-
-def empty():
-    if len(queue) == 0:
-        print(1)
-    else:
-        print(0)
-
-def front():
-    if len(queue) == 0:
-        print(-1)
-    else:
-        print(queue[0])
-
-def back():
-    if len(queue) == 0:
-        print(-1)
-    else:
-        print(queue[-1])
-
-for _ in range(N):
-    command = sys.stdin.readline().strip()
-    
-    if command[:4] == 'push':
-        command, num = command.split()
-        push(num)
-    elif command == 'pop':
-        pop()
-    elif command == 'size':
-        size()
-    elif command == 'empty':
-        empty()
-    elif command == 'front':
-        front()
-    else:
-        back()
+        o, num = order.split()
+        li.append(num)
