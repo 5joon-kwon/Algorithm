@@ -1,24 +1,27 @@
 import sys
+# sys.stdin = open('test.txt', 'r')
+input = sys.stdin.readline
 
 T = int(input())
-
 for _ in range(T):
-    left = []
-    flag = 0
-    S = sys.stdin.readline().strip()
+    li = list(input().rstrip())
+    ans = []
+    flag = False
     
-    for i in S:
+    for i in li:
         if i == '(':
-            left.append(i)
+            ans.append(i)
         else:
-            if len(left) != 0:
-                left.pop()
-            elif len(left) == 0:
+            if len(ans) == 0:
                 print('NO')
-                flag = 1
+                flag = True
                 break
+            ans.pop()
+    
+    if flag:
+        continue
 
-    if len(left) == 0 and flag == 0:
+    if len(ans) == 0:
         print('YES')
-    elif len(left) != 0 and flag == 0:
+    else:
         print('NO')
