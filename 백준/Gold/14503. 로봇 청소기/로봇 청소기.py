@@ -1,52 +1,39 @@
-from collections import deque
-
 n, m = map(int, input().split())
 i, j, d = map(int, input().split())
 grid = [list(map(int, input().split())) for _ in range(n)]
+count = 0
 
-# 북동남서
-dx = [-1, 0, 1, 0]
-dy = [0, 1, 0, -1]
-
-q = deque([[i, j, d]])
-cnt = 0
-
-while q:
-    si, sj, sd = q.popleft()
+def in_range(i, j):
+    return 0 <= i < n and 0 <= j < m
     
-    # 현재 칸 청소 X
-    if grid[si][sj] == 0:
-        cnt += 1
-        grid[si][sj] = 2 # 청소 완료
+# 북, 동, 남, 서
+di = [-1, 0, 1, 0]
+dj = [0, 1, 0, -1]
+
+while True:
+    clean_possible = False
+
+    # 청소해야하는 칸
+    if grid[i][j] == 0:
+        count += 1
+        grid[i][j] = 2
     
-    # 주변 4칸
-    flag = False    # 청소 안된 칸 있는지
-    for dr in range(4):
-        ni, nj = si + dx[dr], sj + dy[dr]
-        
-        if 0 > ni or ni >= n or 0 > nj or nj >= m:
-            continue
-        
-        # 청소 X
-        if grid[ni][nj] == 0:
-            flag = True     # 청소 안된 칸 존재
+    # 주변 4칸 확인
+    for _ in range(4):
+        d = (d + 3) % 4
+        ni, nj = i + di[d], j + dj[d]
+        if in_range(ni, nj) and grid[ni][nj] == 0:
+            clean_possible = True
+            i, j = ni, nj
             break
     
-    # 청소 안된 칸 있으면
-    if flag:
-        for _ in range(4):
-            sd = (sd - 1) % 4   # 반시계 90도 회전
-            ri, rj = si + dx[sd], sj + dy[sd]   # 회전 방향 앞칸
-            # 바라보는 방향으로 앞쪽 칸이 청소 안한 칸이면 전진
-            if 0 <= ri < n and 0 <= rj < m and grid[ri][rj] == 0:
-                q.append([ri, rj, sd])
+    if not clean_possible:
+        ni, nj = i - di[d], j - dj[d]
+
+        if in_range(ni, nj):
+            if grid[ni][nj] == 1:
                 break
-    # 없으면
-    else:
-        bd = (sd - 2) % 4   # 후진
-        bi, bj = si + dx[bd], sj + dy[bd]
-        if 0 > bi or bi >= n or 0 > bj or bj >= m or grid[bi][bj] == 1:
-            break
-        q.append([bi, bj, sd])
+            else:
+                i, j = ni, nj
 
-print(cnt)
+print(count)
